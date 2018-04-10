@@ -16,7 +16,7 @@
 	<h2>Enter Product Details</h2>
 
 	<form:form method="POST" modelAttribute="product" action="/sample/saveproduct">
-		<form:input type="hidden" path="id" id="id" />
+		
 		<table>
 			<tr>
 				<td><label for="id">ID: </label></td>
@@ -31,7 +31,7 @@
 
 			<tr>
 				<td><label for="quantity">Quantity: </label></td>
-				<td><form:input path="quantity" id="salary" /></td>
+				<td><form:input path="quantity" id="quantity" /></td>
 
 			</tr>
 

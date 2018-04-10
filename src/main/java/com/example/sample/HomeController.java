@@ -2,10 +2,12 @@ package com.example.sample;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -15,12 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 
+
 /**
  * Handles requests for the application home page.
  */
 @Controller
 public class HomeController {
 	
+	@Autowired
+	private ProductService service;
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	/**
@@ -42,14 +47,22 @@ public class HomeController {
 	@RequestMapping(value= "/saveproduct", method = RequestMethod.POST)
 	public String addPerson(@ModelAttribute("product") Product product,ModelMap model){
 			
+		service.save(product);
 		  model.addAttribute("success", "Product " + product.getName() + " Added successfully");
 	       return "success";
 		
 	}
 	 @RequestMapping(value = { "/new" }, method = RequestMethod.GET)
-	   public String saveEmployee(Product product, BindingResult result,
+	   public String save(Product product, BindingResult result,
 	           ModelMap model) {
 	 return "newproduct";
 	   }
+	 @RequestMapping(value = {"/list" }, method = RequestMethod.GET)
+		public String listEmployees(ModelMap model) {
+			System.out.println("Enteringgg...");
+			List<Product> products = service.findAll();
+			model.addAttribute("products", products);
+			return "allProducts";
+		}
 	
 }
